@@ -1,0 +1,265 @@
+# =====================================
+# .gitignore SUPREMO para Projetos Qt5
+# =====================================
+
+# Qt5 específico
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.moc
+*.o
+*.so
+*.a
+*.lib
+*.exe
+*.dll
+*.dylib
+*.pdb
+*.ilk
+*.exp
+Makefile*
+*build-*
+*.qm
+*.prl
+.qmake.cache
+.qmake.stash
+*.pro.qtquick_compiler_cache
+*.jsc
+cache/
+qrc_*.cpp
+ui_*.h
+moc_*.cpp
+moc_*.h
+*.moc
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Testing/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+build/
+Build/
+BUILD/
+cmake-build-*/
+
+# Qt Creator
+*.autosave
+*.orig
+*.rej
+*.swp
+*~
+*.backup
+CMakeLists.txt.user*
+*.creator
+*.creator.*
+*.files
+*.includes
+*.config
+*.cflags
+*.cxxflags
+*.creator.user*
+
+# Qt Linguist
+*.ts
+translations/*.qm
+
+# Qt Designer
+*.ui~
+
+# Qt MOC
+moc_*.cpp
+qrc_*.cpp
+
+# Qt Resource files compiled
+*.rcc
+
+# Qt Quick
+*.qmlc
+*.jsc
+
+# QtTest
+Makefile*
+*-build/
+*_build/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+.history/
+
+# CLion
+.idea/
+cmake-build-*/
+
+# GDB
+.gdb_history
+
+# Valgrind
+*.log
+vgcore.*
+callgrind.out.*
+
+# Profiling
+*.gcda
+*.gcno
+*.gcov
+
+# Debian packaging
+debian/tmp/
+debian/files
+debian/*.log
+debian/*.substvars
+
+# Binários e executáveis
+*.exe
+*.out
+*.app
+*.bin
+
+# Bibliotecas
+*.so.*
+*.a
+*.lib
+*.dll
+*.dylib
+
+# Objetos
+*.o
+*.obj
+*.ko
+*.elf
+
+# Linker
+*.ld
+*.map
+
+# Archives
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs e databases
+*.log
+*.sql
+*.sqlite
+*.db
+
+# OS específicos
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# Temporários
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# Debug/Release específicos
+debug/
+Debug/
+release/
+Release/
+x64/
+Win32/
+.vs/
+
+# Coredumps
+core
+core.*
+
+# Memory dumps
+*.dmp
+
+# Unit tests
+Test*/
+test*/
+tests/build/
+gtest_build/
+
+# Coverage
+*.coverage
+htmlcov/
+.coverage.*
+
+# Packaging
+*.deb
+*.rpm
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+
+# Deploy
+deploy/
+dist/
+packages/
+
+# Documentação gerada
+doc/html/
+doc/latex/
+docs/_build/
+
+# IDEs diversos
+*.workspace
+*.cbp
+*.layout
+*.depend
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+
+# Diretórios de build comuns
+build*/
+Build*/
+BUILD*/
+out/
+bin/
+lib/
+libs/
+
+# Tags
+tags
+TAGS
+.tags
+.TAGS
+
+# Patches
+*.orig
+*.rej
+*.patch
+
+# Temporary
+.#*
