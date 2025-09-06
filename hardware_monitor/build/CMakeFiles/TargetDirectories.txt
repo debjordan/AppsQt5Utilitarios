@@ -1,0 +1,4 @@
+/home/hawk/lab_projects/hardware_monitor/build/CMakeFiles/HardwareMonitor.dir
+/home/hawk/lab_projects/hardware_monitor/build/CMakeFiles/edit_cache.dir
+/home/hawk/lab_projects/hardware_monitor/build/CMakeFiles/rebuild_cache.dir
+/home/hawk/lab_projects/hardware_monitor/build/CMakeFiles/HardwareMonitor_autogen.dir
