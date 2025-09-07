@@ -1,0 +1,18 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=SSH Terminal
+Name[pt_BR]=Terminal SSH
+Comment=SSH Terminal integrado com interface Qt5
+Comment[pt_BR]=Terminal SSH integrado para conexões remotas
+GenericName=SSH Client
+GenericName[pt_BR]=Cliente SSH
+Exec=@CMAKE_INSTALL_PREFIX@/bin/SSHTerminal
+Icon=utilities-terminal
+Terminal=false
+StartupNotify=true
+Categories=Network;RemoteAccess;System;
+Keywords=ssh;terminal;remote;servidor;conexao;
+Keywords[pt_BR]=ssh;terminal;remoto;servidor;conexao;
+MimeType=
+StartupWMClass=SSHTerminal

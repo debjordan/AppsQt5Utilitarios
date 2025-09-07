@@ -1,0 +1,185 @@
+# Makefile para SSH Terminal - AppsQt5Utilitarios
+# Para desenvolvimento no VSCode
+
+# Configurações básicas
+TARGET = SSHTerminal
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic
+QT_MODULES = Core Widgets
+
+# Detectar paths do Qt automaticamente
+QT_PATH = $(shell pkg-config --variable=prefix Qt5Core)
+ifeq ($(QT_PATH),)
+    QT_PATH = /usr
+endif
+
+# Includes do Qt
+QT_INCLUDES = $(shell pkg-config --cflags Qt5Core Qt5Widgets)
+QT_LIBS = $(shell pkg-config --libs Qt5Core Qt5Widgets)
+
+# Configurações de compilação
+INCLUDES = $(QT_INCLUDES) -I.
+LIBS = $(QT_LIBS)
+
+# Modo debug por padrão
+DEBUG ?= 1
+ifeq ($(DEBUG), 1)
+    CXXFLAGS += -g -O0 -DDEBUG
+    BUILD_DIR = debug
+else
+    CXXFLAGS += -O2 -DNDEBUG -DQT_NO_DEBUG_OUTPUT
+    BUILD_DIR = release
+endif
+
+# Arquivos fonte
+SOURCES = main.cpp sshterminal.cpp
+HEADERS = sshterminal.h
+
+# Arquivos objeto
+OBJECTS = $(SOURCES:%.cpp=$(BUILD_DIR)/%.o)
+MOC_HEADERS = sshterminal.h
+MOC_SOURCES = $(MOC_HEADERS:%.h=$(BUILD_DIR)/moc_%.cpp)
+MOC_OBJECTS = $(MOC_SOURCES:%.cpp=%.o)
+
+# Executável final
+EXECUTABLE = $(BUILD_DIR)/$(TARGET)
+
+# Regra padrão
+.PHONY: all
+all: $(EXECUTABLE)
+
+# Criar executável
+$(EXECUTABLE): $(OBJECTS) $(MOC_OBJECTS) | $(BUILD_DIR)
+	@echo "Linkando $(TARGET)..."
+	$(CXX) $(OBJECTS) $(MOC_OBJECTS) $(LIBS) -o $@
+	@echo "Build concluído: $@"
+
+# Compilar arquivos fonte
+$(BUILD_DIR)/%.o: %.cpp $(HEADERS) | $(BUILD_DIR)
+	@echo "Compilando $<..."
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+
+# Gerar arquivos MOC
+$(BUILD_DIR)/moc_%.cpp: %.h | $(BUILD_DIR)
+	@echo "Gerando MOC para $<..."
+	$(shell pkg-config --variable=host_bins Qt5Core)/moc $< -o $@
+
+# Compilar arquivos MOC
+$(BUILD_DIR)/moc_%.o: $(BUILD_DIR)/moc_%.cpp | $(BUILD_DIR)
+	@echo "Compilando MOC $<..."
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+
+# Criar diretório de build
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+# Regras de limpeza
+.PHONY: clean
+clean:
+	@echo "Limpando arquivos de build..."
+	rm -rf debug release $(TARGET)
+	rm -f *.o moc_*.cpp moc_*.h
+	@echo "Limpeza concluída!"
+
+.PHONY: distclean
+distclean: clean
+	rm -f Makefile.qmake
+	rm -f .qmake.stash
+
+# Regras de build específicas
+.PHONY: debug
+debug:
+	$(MAKE) DEBUG=1
+
+.PHONY: release
+release:
+	$(MAKE) DEBUG=0
+
+# Executar aplicação
+.PHONY: run
+run: $(EXECUTABLE)
+	@echo "Executando $(TARGET)..."
+	./$(EXECUTABLE)
+
+# Instalar no sistema
+.PHONY: install
+install: release
+	@echo "Instalando $(TARGET)..."
+	sudo cp $(BUILD_DIR)/$(TARGET) /usr/local/bin/
+	sudo chmod +x /usr/local/bin/$(TARGET)
+	@if [ -f "sshterminal.desktop" ]; then \
+		sudo cp sshterminal.desktop /usr/share/applications/; \
+		sudo update-desktop-database /usr/share/applications/ 2>/dev/null || true; \
+	fi
+	@echo "Instalação concluída!"
+
+# Desinstalar
+.PHONY: uninstall
+uninstall:
+	@echo "Removendo $(TARGET)..."
+	sudo rm -f /usr/local/bin/$(TARGET)
+	sudo rm -f /usr/share/applications/sshterminal.desktop
+	sudo update-desktop-database /usr/share/applications/ 2>/dev/null || true
+	@echo "Desinstalação concluída!"
+
+# Verificar dependências
+.PHONY: check-deps
+check-deps:
+	@echo "Verificando dependências..."
+	@which $(CXX) >/dev/null || (echo "ERRO: $(CXX) não encontrado!" && exit 1)
+	@pkg-config --exists Qt5Core Qt5Widgets || (echo "ERRO: Qt5 development packages não encontrados!" && exit 1)
+	@which sshpass >/dev/null || (echo "AVISO: sshpass não encontrado - será necessário para usar a aplicação")
+	@echo "Dependências verificadas!"
+
+# Mostrar informações do build
+.PHONY: info
+info:
+	@echo "=== Informações do Build ==="
+	@echo "Target: $(TARGET)"
+	@echo "Compilador: $(CXX)"
+	@echo "Flags: $(CXXFLAGS)"
+	@echo "Qt Path: $(QT_PATH)"
+	@echo "Build Dir: $(BUILD_DIR)"
+	@echo "Sources: $(SOURCES)"
+	@echo "Headers: $(HEADERS)"
+	@echo "================================"
+
+# Formato do código (se clang-format estiver disponível)
+.PHONY: format
+format:
+	@if which clang-format >/dev/null 2>&1; then \
+		echo "Formatando código..."; \
+		clang-format -i $(SOURCES) $(HEADERS); \
+		echo "Formatação concluída!"; \
+	else \
+		echo "clang-format não encontrado - pulando formatação"; \
+	fi
+
+# Ajuda
+.PHONY: help
+help:
+	@echo "Makefile para SSH Terminal"
+	@echo ""
+	@echo "Targets disponíveis:"
+	@echo "  all        - Build padrão (debug)"
+	@echo "  debug      - Build em modo debug"
+	@echo "  release    - Build em modo release"
+	@echo "  clean      - Limpar arquivos de build"
+	@echo "  distclean  - Limpeza completa"
+	@echo "  run        - Compilar e executar"
+	@echo "  install    - Instalar no sistema"
+	@echo "  uninstall  - Remover do sistema"
+	@echo "  check-deps - Verificar dependências"
+	@echo "  format     - Formatar código"
+	@echo "  info       - Mostrar informações do build"
+	@echo "  help       - Mostrar esta ajuda"
+	@echo ""
+	@echo "Variáveis:"
+	@echo "  DEBUG=1    - Build debug (padrão)"
+	@echo "  DEBUG=0    - Build release"
+	@echo ""
+	@echo "Exemplos:"
+	@echo "  make                    # Build debug"
+	@echo "  make DEBUG=0            # Build release"
+	@echo "  make clean run          # Limpar e executar"
+	@echo "  make release install    # Build release e instalar"
