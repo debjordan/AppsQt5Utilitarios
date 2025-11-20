@@ -1,42 +1,42 @@
-# Apps Qt5 Utilitários
+# **Qt5 Utility Apps**
 
-Coleção de aplicações desktop utilitárias desenvolvidas em C++ com Qt5 para sistemas Linux.
+A collection of utility desktop applications developed in C++ with Qt5 for Linux systems.
 
-## 🎯 Propósito
+## 🎯 Purpose
 
-Este repositório reúne ferramentas simples e eficientes para uso diário no Linux, focando em:
-- **Simplicidade** - Interfaces diretas e funcionais
-- **Eficiência** - Baixo consumo de recursos
-- **Utilidade** - Resolvem problemas reais do dia a dia
+This repository brings together simple and efficient tools for daily Linux use, focusing on:
 
+* **Simplicity** – Direct and functional interfaces
+* **Efficiency** – Low resource consumption
+* **Utility** – Solutions for real, everyday problems
 
-## 🛠️ Tecnologias
+## 🛠️ Technologies
 
-- **C++17** - Linguagem principal
-- **Qt5** - Framework de interface
-- **CMake** - Sistema de build
-- **Linux** - Sistema alvo (Debian/Ubuntu)
+* **C++17** – Main programming language
+* **Qt5** – UI framework
+* **CMake** – Build system
+* **Linux** – Target environment (Debian/Ubuntu)
 
-## 🚀 Uso Geral
+## 🚀 General Usage
 
-Cada app tem sua própria pasta com instruções específicas:
+Each app has its own folder with specific instructions:
 
 ```bash
 git clone https://github.com/debjordan/AppsQt5Utilitarios
-cd AppsQt5Utilitarios/nome-do-app
-# Siga o README específico do app
+cd AppsQt5Utilitarios/app-name
+# Follow the app's specific README
 ```
 
-## 📋 Requisitos Gerais
+## 📋 General Requirements
 
 ```bash
 sudo apt install build-essential qtbase5-dev cmake
 ```
 
-## 💡 Filosofia
+## 💡 Philosophy
 
-Apps práticos, sem firulas. Fazem o que prometem de forma eficiente.
+Practical apps, no fluff. They do what they promise—efficiently.
 
 ---
 
-**Desenvolvido para Linux, testado no Debian.**
+**Developed for Linux, tested on Debian.**
